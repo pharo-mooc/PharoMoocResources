@@ -1,0 +1,108 @@
+\documentclass[12pt]{article}
+\usepackage{a4wide}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage[pdftex,colorlinks=true,pdfstartview=FitV,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{xspace}   
+
+\newcommand{\tab}{\hspace*{1cm}}
+\newcommand{\comment}[1]{\textcolor{red}{\bf\em #1}\par}
+
+\begin{document}
+\vspace*{-3.5cm}
+\hspace*{-2.5cm}
+\begin{tabular}{lc}
+\includegraphics{logoMinesDouai-small} 
+& 
+\begin{minipage}[b]{15cm}
+\begin{center}
+{\it TP Programmation par objet}\\~\\
+{\Large\bf Concurrence}\\~\\
+{\sf Noury Bouraqadi}
+\end{center}
+\end{minipage}\\
+\end{tabular}
+
+\newcommand{\st}[1]{{\small \verb!#1!}} 
+
+
+\section{Thread et affichage textuel}
+Vous allez utiliser le \sf{Transcript} dans cet exercice et analyser le texte qui y apparaitra. 
+Afin de vous simplifiez la vie, effacez son contenu avant chaque exécution.
+Il est possible de faire cela directement dans votre code à l'aide de l'expression \st{Transcript clear}.
+ 
+\subsection{Threads simples}
+Définissez deux threads en faisant appel à la méthode \st{fork} et qui tous les deux effectuent un affichage le \st{Transcript}.
+\begin{itemize}
+	\item le premier affiche 10 fois la chaîne de caractères \st{'ping'} précédée d'un saut de ligne;
+	\item le second affiche 10 fois la chaîne de caractères \st{'PONG'} précédée d'un saut de ligne.
+\end{itemize} 
+
+Quel affichage obtenez-vous ? Expliquez.
+
+\subsection{Priorités de threads}
+Modifiez vos threads de manière à leur attribuer des priorités différentes :
+\begin{itemize}
+	\item attribuez la priorité 30 au premier thread (qui affiche 'ping');
+	\item attribuez la priorité 40 au second thread (qui affiche 'PONG')
+\end{itemize}
+
+Quel affichage obtenez-vous ? Expliquez.
+
+\subsection{Attentes}
+Ajoutés des délais d'attentes dans vos threads :
+\begin{itemize}
+	\item attendez 100 millisecondes avant chaque affichage pour le premier thread (qui affiche 'ping');
+	\item attendez 300 millisecondes avant chaque affichage pour le second thread (qui affiche 'PONG').	
+\end{itemize}
+
+Quel affichage obtenez-vous ? Expliquez.
+
+
+\section{Balles Rebondissantes}
+Soit la classe \st{SimulationBalleRebondissante} fournie qui correspond à une simulation de balle rebondissante.
+Elle met en oeuvre un \emph{thread} qui contrôle le mouvement d'une balle.
+Elle répond aux méthodes :
+\begin{itemize}
+	\item \st{lancerSimulation} affiche une balle rebondissante et lance le thread qui en contrôle le déplacement.
+	\item \st{arreterSimulation} arrête le thread qui contrôle le déplacement de la balle.
+	\item \st{arreterAffichage} masque l'affichage de la balle rebondissante.
+\end{itemize}
+
+\begin{enumerate}
+	\item Testez le bon fonctionnement d'une simulation. 
+	\item Lancez une simulation et sauvegardez votre image et Pharo \textbf{sans} quitter la simulation. Relancez votre image Pharo. Que constatez-vous
+	\item Construire, puis lancez simultanement une collection de 100 simulations. Que constatez-vous ? 
+	\item Proposez une solution qui résout le problème.
+\end{enumerate}
+
+
+%%%%%%%%%% 
+\section{Course d'escargots}
+Vous allez réaliser dans cet exercice une course d'escargots. 
+Les escargots seront seront affichés sous forme de graphique à l'aide de la classe \st{AfficheurEscargot fournie}.
+Vous utiliserez le \emph{pattern} observateur pour actualiser l'affichage.
+
+La course est chronométrée.
+Votre application doit avoir un thread pour le chronometre, ainsi qu'un thread par escargot.
+Ainsi, une course de 3 escargot nécessitera 4 threads.
+Lorsque le premier escargot a depassé la ligne d'arrivé, tous les threads doivent être arrêtés et la valeur du chronomètre doit être affichée sur le \st{Transcript}.
+
+Les escargots sont initialement alignés sur la gauche de l'écran et doivent parcourir une distance equivalente à plusieurs fois leurs longeur (un escargot fait 150 pixels de long).
+Un escargot avance d'un pas (10 pixels) à chaque pas de temps (100 millisecondes).
+Il dispose d'une quantité d'énergie qui correspond au nombre de pas consécutifs qu'il peut effectuer.
+A chaque pas, le niveau d'énergie est décrémenté.
+
+Lorsque le niveau d'énergie atteint 0 l'escargot rentre dans sa coquille et dors pendant un nombre de pas de temps aléatoire (entre 1 et 10).
+Pendant le sommeil, le niveau d'énergie est incrémenté d'une valeur aléatoire entre 1 et 10.
+Lorsque l'escargot se réveille, il reprend la course.
+
+A sa création, la quantité d'energie initiale d'un escargot est définie de manière aléatoire entre 1 et 10.
+Pour le tirage aléatoire, vous utiliserez la méthode \st{atRandom} permet d'obtenir un élément au hasard d'une collection.
+Par exemple l'expression \st{(25 to: 43) atRandom} retourne un élément au hasard dans l'intervalle de nombres entiers dont les bornes sont 25 et 43 inclus.
+
+\end{document}

@@ -1,0 +1,175 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{a4wide}
+\usepackage[francais]{babel}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{datetime}
+\usepackage{times}
+\usepackage{eurosym}
+\usepackage{color}
+\usepackage{xspace}
+
+\newcommand{\tab}{\hspace*{1cm}}
+\newcommand{\comment}[1]{\textcolor{red}{\bf\em #1}\par}
+
+\begin{document}
+\vspace*{-3.5cm}
+\hspace*{-2.5cm}
+\begin{tabular}{lc}
+\includegraphics{logoMinesDouai-small} 
+& 
+\begin{minipage}[b]{15cm}
+\begin{center}
+{\it TP Programmation par objet}\\~\\
+{\Large\bf Tests + Observateur}\\~\\
+{\sf Noury Bouraqadi}
+\end{center}
+\end{minipage}\\
+\end{tabular}
+\section{Balle Simple}
+Il s'agit de faire une simulation de la chute d'une balle simple soumise à la gravité.
+Vous allez procéder suivant une démarche de développement dirigée par les tests.
+
+Définissez la classe {\sf TestBalleSimple} sous-classe de {\sf TestCase} qui teste les scenarios ci-dessous.
+Implémentez la classe {\sf BalleSimple} qui répond aux tests au fur et à mesure de leur définition.
+
+\begin{itemize}
+	\item Une balle a une position (résultat du message {\sf position}) qui est initialement {\sf (0@0)}.
+	\item Soit une balle dont la position est {\sf (86@29)}. 
+	Après réception du message {\sf position: (30@40)}, la position la balle simple devient {\sf (30@40)}.
+	\item Soit une balle dont la position est {\sf (73@64)}. 
+	Après réception du message {\sf position: (21@ -34)}, la position la balle simple devient {\sf (21@0)}.
+	\item La vitesse d'une balle (résultat du message {\sf vitesse}) est initialement de {\sf (0 @ -1)}. Il s'agit en fait d'un vecteur vitesse qui donne la vitesse selon les axes x et y.
+	\item Soit une balle initialement en {\sf (10 @ 10)} avec une vitesse de {\sf (3 @ 2)}. 
+	Après un pas de simulation (message {\sf unPasDeSimulation}), la position de la balle devient  {\sf (13 @ 12)}. 
+	La vitesse reste inchangée.
+	\item Soit une balle initialement en {\sf (20 @ 20)} avec une vitesse de {\sf (-5 @ 6)}. 
+	Après un pas de simulation (message {\sf unPasDeSimulation}), la position de la balle devient  {\sf (15 @ 26)}. 
+	La vitesse reste inchangée.
+	\item Soit une balle initialement en {\sf (23 @ 50)} avec une vitesse de {\sf (-3 @ 5)}. 
+	Après un pas de simulation (message {\sf unPasDeSimulation}), la position de la balle devient  {\sf (20 @ 55)}. 
+	La vitesse reste inchangée.
+	\item Soit une balle initialement en {\sf (42 @ 10)} avec une vitesse de {\sf (8 @ -9)}. 
+	Après un pas de simulation (message {\sf unPasDeSimulation}), la position de la balle devient  {\sf (50 @ 1)}. 
+	La vitesse reste inchangée.
+	\item Soit une balle initialement en {\sf (34 @ 4)} avec une vitesse de {\sf (21 @ -10)}.
+	Après un pas de simulation (message {\sf unPasDeSimulation}), la position de la balle devient  {\sf (55 @ 0)}. 
+	La vitesse reste inchangée.
+	\item Soit une balle initialement en {\sf (100 @ 0)} et dont la vitesse est {\sf (0 @ -5)}. 
+	Après un pas de simulation (message {\sf unPasDeSimulation}), la position et la vitesse restent inchangées.
+	\item Soit une balle initialement en {\sf (35 @ 0)} et dont la vitesse est {\sf (10 @ -7)}. 
+	Après un pas de simulation (message {\sf unPasDeSimulation}), la position de la balle devient  {\sf (45 @ 0)}. 
+	La vitesse reste inchangée.
+	\item Soit une balle initialement en {\sf (38 @ 0)} et dont la vitesse est {\sf (2 @ 10)}. 
+	Après un pas de simulation (message {\sf unPasDeSimulation}), la position de la balle devient  {\sf (40 @ 10)}. La vitesse reste inchangée.
+\end{itemize}
+
+
+\section{Affichage de la balle}
+Complétez les classes fournies pour réaliser l'affichage de la balle.
+\begin{itemize}
+
+	\item Faites passer les tests fournis pour coupler l'affichage de la balle avec l'afficheur de balle fourni.
+	Utilisez pour cela le \emph{pattern} Observateur et plus spécifiquement avec la bibliothèque \emph{Announcement} de Pharo.
+
+	\item Vérifiez à l'aide de des tests que vous avez écrits dans l'exercice précédent que la balle continue de fonctionner correctement après vos modifications.
+
+
+	\item Toujours avec le \emph{pattern} Observateur, liez la balle avec une courbe (instance de la classe {\sf Courbe} fournie) de manière à tracer la trajectoire de la balle. Vous devez avoir en même temps l'affichage de la balle et le tracé de la courbe.
+	Vous devez avoir une seule classe d'événement utilisée aussi bien pour l'afficheur de la balle que pour la courbe.
+
+	\item Complètez la méthode {\sf initialize} de la classe {\sf Simulation} fournie pour lier une balle simple avec un afficheur et une courbe. Vous pourrez voir une simulation s'exécuter en évaluant dans un \emph{workspace} le code suivant :
+	{\sf \\sim := Simulation new.
+		\\sim lancerSimulation.
+	}
+\end{itemize}
+
+% \section{Simulation concurrente}
+% Créez la classe {\sf Simulation} qui dispose d'une balle et d'un afficheur liés par le \emph{pattern} Observateur.
+% La balle doit être initialement à une position avec x et y positifs.
+%
+% Dotez la classe {\sf Simulation} d'une méthode {\sf lancerSimulation} qui crée et lance un \emph{thread} qui boucle indéfiniment et réalise à chaque itération ce qui suit :
+% \begin{itemize}
+% 	\item Attendre 100 millisecondes
+% 	\item si la position de la balle est telle que y < 0, alors remettre la balle dans sa position initiale.
+% 	\item sinon faire faire à la balle un pas de simulation
+% \end{itemize}
+
+
+%%%%%%%%%% 
+\section{Balle Rebondissante}
+Les besoins de votre client ont évolué, il souhaite que la balle soit désormais rebondissante. 
+Elle doit vérifier les scénario ci-dessous.
+Définissez la classe {\sf TestBalleRebondissante} comme une copie de la classe {\sf TestBalleSimple} (clic droit sur la classe, puis choisir le menu \emph{Copy}) 
+
+Définissez la classe {\sf BalleRebondissante} pour qu'elle réponde aux tests.
+L'implémentation doit se faire au fur et à mesure de l'introduction des tests.
+
+
+\begin{itemize}
+	\item Une balle a une position (résultat du message {\sf position}) qui est initialement {\sf (0@0)}.
+	\item Soit une balle dont la position est {\sf (86@29)}. 
+	Après réception du message {\sf position: (30@40)}, la position la balle simple devient {\sf (30@40)}.
+	\item Soit une balle dont la position est {\sf (73@64)}. 
+	Après réception du message {\sf position: (21@ -34)}, la position la balle simple devient {\sf (21@0)}.
+	\item La vitesse d'une balle (résultat du message {\sf vitesse}) est initialement de {\sf (0 @ -1)}. Il s'agit en fait d'un vecteur vitesse qui donne la vitesse selon les axes x et y.
+	\item Soit une balle initialement en {\sf (10 @ 10)} avec une vitesse de {\sf (3 @ 2)}. 
+	Après un pas de simulation (message {\sf unPasDeSimulation}), la position de la balle devient  {\sf (13 @ 12)}. 
+	La vitesse reste inchangée.
+	\item Soit une balle initialement en {\sf (20 @ 20)} avec une vitesse de {\sf (-5 @ 6)}. 
+	Après un pas de simulation (message {\sf unPasDeSimulation}), la position de la balle devient  {\sf (15 @ 26)}. 
+	La vitesse reste inchangée.
+	\item Soit une balle initialement en {\sf (23 @ 50)} avec une vitesse de {\sf (-3 @ 5)}. 
+	Après un pas de simulation (message {\sf unPasDeSimulation}), la position de la balle devient  {\sf (20 @ 55)}. 
+	La vitesse reste inchangée.
+	\item Soit une balle initialement en {\sf (42 @ 10)} avec une vitesse de {\sf (8 @ -9)}. 
+	Après un pas de simulation (message {\sf unPasDeSimulation}), la position de la balle devient  {\sf (50 @ 1)}. 
+	La vitesse reste inchangée.
+	\item Soit une balle initialement en {\sf (34 @ 4)} avec une vitesse de {\sf (21 @ -10)}.
+	Après un pas de simulation (message {\sf unPasDeSimulation}), la position de la balle devient  {\sf (55 @ 0)}. 
+	La vitesse devient {\sf (21 @ 5)}. C'est le début du rebond : changement de signe et de la valeur la vitesse suivant l'axe y.
+	\item Soit une balle initialement en {\sf (100 @ 0)} et dont la vitesse est {\sf (0 @ -5)}. 
+	Après un pas de simulation (message {\sf unPasDeSimulation}), la position reste inchangée.
+	La vitesse devient {\sf (0 @ 2)}.
+	\item Soit une balle initialement en {\sf (35 @ 0)} et dont la vitesse est {\sf (10 @ -7)}. 
+	Après un pas de simulation (message {\sf unPasDeSimulation}), la position de la balle devient  {\sf (45 @ 0)}. La vitesse devient {\sf (10 @ 3)}.
+	\item Soit une balle initialement en {\sf (38 @ 0)} et dont la vitesse est {\sf (2 @ 10)}. 
+	Après un pas de simulation (message {\sf unPasDeSimulation}), la position de la balle devient  {\sf (40 @ 10)}. La vitesse reste inchangée.
+
+\end{itemize}
+
+\section{Balle rebondissante réaliste}
+Toujours en vous appuyant sur des tests, développez la classe {\sf BalleRealiste}. Il s'agit d'une classe de balles rebondissantes dont la vitesse évolue avec la gravité et le frottement de l'air. 
+La gravité ralenti la montée et accélère la chute de la balle.
+Le frottement ralenti dimune la valeur absolue de la vitesse dans toutes les directions.
+Nous faisons l'hypothèse que :
+\begin{itemize}
+	\item la gravité est de 1 suivant l'axe Y ;
+	\item le frotemment est constant et a pour valeur 0.25 suivant l'exe X et également 0.25 suivant l'axe Y.
+\end{itemize}
+
+\section{Mini-Pong}
+Développez un mini-jeu de pong décrit ci-dessous.
+ 
+Il s'agit d'un jeu avec une balle qui rebondit sur les murs d'un terrain rectangulaire.
+La balle peut rebondir sur 3 murs.
+Mais, si elle touche le quatrième, la partie se termine.
+
+Le joueur dispose d'une raquette qu'il peut déplacer le long du quatrième mur.
+Il peut ainsi faire renvoyer la balle et faire durer la partie le plus longtemps possible.
+
+La vitesse initiale de la balle en x comme en y est choisi aléatoirement parmi les valeurs suivantes : -50, -30, 30 et 50.
+Sa position a un x abitraire, mais son y est toujours égal à la moitié de la hauteur du terrain.
+
+A chaque rebond le joueur marque 1 point.
+A la suite d'un rebond, la vitesse de la balle augmente de 10 soit en x soit en y suivant le mur sur lequel a lieu le rebond.
+Puis. la balle change d'orientation. 
+Cela est effectué en inversant le signe de la coordonnée de la vitesse qui a changé.
+
+
+
+
+
+\end{document}

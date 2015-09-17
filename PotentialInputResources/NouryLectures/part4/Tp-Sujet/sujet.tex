@@ -1,0 +1,50 @@
+\documentclass[12pt]{article}
+\usepackage{a4wide}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage[pdftex,colorlinks=true,pdfstartview=FitV,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{xspace}   
+
+\begin{document}
+\vspace*{-3.5cm}
+\hspace*{-2.5cm}
+\begin{tabular}{lc}
+\resizebox{2cm}{!}{\includegraphics{logoMinesDouai-small}} 
+& 
+\begin{minipage}[b]{15cm}
+\begin{center}
+{\it TP Programmation par Objets}\\~\\
+{\Large\bf Collections et Héritage : Tetris}\\~\\
+{\sf Noury Bouraqadi}
+\end{center}
+\end{minipage}\\
+\end{tabular}
+
+
+\newcommand{\st}[1]{{\small \verb!#1!}} 
+
+\section*{Description du jeu}
+L'objectif du TP est développer un jeu de tetris simple, où des pièces composées d'un ou de plusieurs carrés tombent.
+Vous devez les déplacer avec les touches flèches du clavier pour les déplacer vers la gauche ou vers la droite.
+Le but est d'atteindre le score maximum en plaçant le plus de pièces possibles.
+
+\section*{Code fourni}
+Vous utiliserez l'image fournie.
+Elle contient des classes finalisées pour notamment gérer l'affichage et le déroulement du jeu.
+La classe principale est \st{TsTetris}. 
+Elle permet de lancer le jeu en évaluant dans un workspace l'expression \st{TsTetris start}.
+
+\section*{Travail à réaliser}
+Complétez le jeu en ajoutant des classes manquantes à savoir :
+\begin{itemize}
+	\item \st{TsCarre} : C'est un fragment de pièce. Il occupe une case complète dans le terrain.
+	\item \st{TsBarre} : C'est la classes des pièces rectilignes horizontales composées chacune de 1 à 4 carré.
+	\item \st{TsTerrain} : Représente le terrain dans le quel tombent les pièces. Un terrain dispose d'une matrice de cases qui peuvent être vides (contenu égal à \st{nil}) ou pleines (le contenu est un carré).
+\end{itemize}
+
+
+\end{document}
